@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace MottuApi.Controllers
 {
     /// <summary>
-    /// Controller para operações CRUD de pátios.
+    /// Controller para operaï¿½ï¿½es CRUD de pï¿½tios.
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/patios")]
     public class PatiosController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -21,11 +21,11 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Retorna uma lista paginada de pátios.
+        /// Retorna uma lista paginada de pï¿½tios.
         /// </summary>
-        /// <param name="page">Número da página (padrão: 1).</param>
-        /// <param name="pageSize">Tamanho da página (padrão: 10).</param>
-        /// <returns>Lista paginada de pátios com links HATEOAS.</returns>
+        /// <param name="page">Nï¿½mero da pï¿½gina (padrï¿½o: 1).</param>
+        /// <param name="pageSize">Tamanho da pï¿½gina (padrï¿½o: 10).</param>
+        /// <returns>Lista paginada de pï¿½tios com links HATEOAS.</returns>
         [HttpGet]
         public async Task<ActionResult<object>> GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
@@ -52,10 +52,10 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Retorna um pátio pelo seu identificador.
+        /// Retorna um pï¿½tio pelo seu identificador.
         /// </summary>
-        /// <param name="id">Id do pátio.</param>
-        /// <returns>Pátio encontrado ou 404.</returns>
+        /// <param name="id">Id do pï¿½tio.</param>
+        /// <returns>Pï¿½tio encontrado ou 404.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Patio>> GetById(int id)
         {
@@ -65,10 +65,10 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Cria um novo pátio.
+        /// Cria um novo pï¿½tio.
         /// </summary>
-        /// <param name="patio">Dados do pátio.</param>
-        /// <returns>Pátio criado.</returns>
+        /// <param name="patio">Dados do pï¿½tio.</param>
+        /// <returns>Pï¿½tio criado.</returns>
         [HttpPost]
         public async Task<ActionResult<Patio>> Create(Patio patio)
         {
@@ -78,11 +78,11 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Atualiza um pátio existente.
+        /// Atualiza um pï¿½tio existente.
         /// </summary>
-        /// <param name="id">Id do pátio.</param>
+        /// <param name="id">Id do pï¿½tio.</param>
         /// <param name="patio">Dados atualizados.</param>
-        /// <returns>Status da operação.</returns>
+        /// <returns>Status da operaï¿½ï¿½o.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Patio patio)
         {
@@ -99,10 +99,10 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Exclui um pátio pelo id.
+        /// Exclui um pï¿½tio pelo id.
         /// </summary>
-        /// <param name="id">Id do pátio.</param>
-        /// <returns>Status da operação.</returns>
+        /// <param name="id">Id do pï¿½tio.</param>
+        /// <returns>Status da operaï¿½ï¿½o.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\labsfiap\\Downloads\\Challenge-MottuAPi-CS-main\\Challenge-MottuAPI-CS-main\\MottuApi.csproj": {}
+    "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\MottuApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\labsfiap\\Downloads\\Challenge-MottuAPi-CS-main\\Challenge-MottuAPI-CS-main\\MottuApi.csproj": {
+    "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\MottuApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\labsfiap\\Downloads\\Challenge-MottuAPi-CS-main\\Challenge-MottuAPI-CS-main\\MottuApi.csproj",
+        "projectUniqueName": "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\MottuApi.csproj",
         "projectName": "MottuApi",
-        "projectPath": "C:\\Users\\labsfiap\\Downloads\\Challenge-MottuAPi-CS-main\\Challenge-MottuAPI-CS-main\\MottuApi.csproj",
+        "projectPath": "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\MottuApi.csproj",
         "packagesPath": "C:\\Users\\labsfiap\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\labsfiap\\Downloads\\Challenge-MottuAPi-CS-main\\Challenge-MottuAPI-CS-main\\obj\\",
+        "outputPath": "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

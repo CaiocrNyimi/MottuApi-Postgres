@@ -9,7 +9,7 @@ namespace MottuApi.Controllers
     /// Controller para operações CRUD de motos.
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/motos")]
     public class MotosController : ControllerBase
     {
         private readonly AppDbContext _context;

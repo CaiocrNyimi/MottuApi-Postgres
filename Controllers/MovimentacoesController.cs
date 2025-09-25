@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 namespace MottuApi.Controllers
 {
     /// <summary>
-    /// Controller para operações CRUD de movimentações.
+    /// Controller para operaï¿½ï¿½es CRUD de movimentaï¿½ï¿½es.
     /// </summary>
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/movimentacoes")]
     public class MovimentacoesController : ControllerBase
     {
         private readonly AppDbContext _context;
@@ -21,11 +21,11 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Retorna uma lista paginada de movimentações.
+        /// Retorna uma lista paginada de movimentaï¿½ï¿½es.
         /// </summary>
-        /// <param name="page">Número da página (padrão: 1).</param>
-        /// <param name="pageSize">Tamanho da página (padrão: 10).</param>
-        /// <returns>Lista paginada de movimentações com links HATEOAS.</returns>
+        /// <param name="page">Nï¿½mero da pï¿½gina (padrï¿½o: 1).</param>
+        /// <param name="pageSize">Tamanho da pï¿½gina (padrï¿½o: 10).</param>
+        /// <returns>Lista paginada de movimentaï¿½ï¿½es com links HATEOAS.</returns>
         [HttpGet]
         public async Task<ActionResult<object>> GetAll([FromQuery] int page = 1, [FromQuery] int pageSize = 10)
         {
@@ -58,10 +58,10 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Retorna uma movimentação pelo seu identificador.
+        /// Retorna uma movimentaï¿½ï¿½o pelo seu identificador.
         /// </summary>
-        /// <param name="id">Id da movimentação.</param>
-        /// <returns>Movimentação encontrada ou 404.</returns>
+        /// <param name="id">Id da movimentaï¿½ï¿½o.</param>
+        /// <returns>Movimentaï¿½ï¿½o encontrada ou 404.</returns>
         [HttpGet("{id}")]
         public async Task<ActionResult<Movimentacao>> GetById(int id)
         {
@@ -75,10 +75,10 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Cria uma nova movimentação.
+        /// Cria uma nova movimentaï¿½ï¿½o.
         /// </summary>
-        /// <param name="movimentacao">Dados da movimentação.</param>
-        /// <returns>Movimentação criada.</returns>
+        /// <param name="movimentacao">Dados da movimentaï¿½ï¿½o.</param>
+        /// <returns>Movimentaï¿½ï¿½o criada.</returns>
         [HttpPost]
         public async Task<ActionResult<Movimentacao>> Create(Movimentacao movimentacao)
         {
@@ -88,11 +88,11 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Atualiza uma movimentação existente.
+        /// Atualiza uma movimentaï¿½ï¿½o existente.
         /// </summary>
-        /// <param name="id">Id da movimentação.</param>
+        /// <param name="id">Id da movimentaï¿½ï¿½o.</param>
         /// <param name="movimentacao">Dados atualizados.</param>
-        /// <returns>Status da operação.</returns>
+        /// <returns>Status da operaï¿½ï¿½o.</returns>
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Movimentacao movimentacao)
         {
@@ -111,10 +111,10 @@ namespace MottuApi.Controllers
         }
 
         /// <summary>
-        /// Exclui uma movimentação pelo id.
+        /// Exclui uma movimentaï¿½ï¿½o pelo id.
         /// </summary>
-        /// <param name="id">Id da movimentação.</param>
-        /// <returns>Status da operação.</returns>
+        /// <param name="id">Id da movimentaï¿½ï¿½o.</param>
+        /// <returns>Status da operaï¿½ï¿½o.</returns>
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
