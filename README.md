@@ -1,25 +1,50 @@
 
-# 🏍️ API de Gestão de Motos:  Henzo Puchetti - RM555179 e Luann Domingos Mariano - RM558548
+# 🏍️ API de Gestão de Motos:  
+- Henzo Puchetti - RM555179
+- Luann Domingos Mariano - RM558548
+- Caio Cesar Rosa Nyimi - RM556331
 
 ---
 
 ## 📌 Descrição
 
 Com uma arquitetura simples e eficiente para facilitar manutenção e escalabilidade, desenvolvemos uma:
-API RESTful para gerenciamento de motos em pátios, desenvolvida em ASP.NET Core com Entity Framework Core e banco Oracle. Permite operações CRUD completas, consultas parametrizadas por ID e placa, e oferece documentação automática via Swagger.
+API RESTful para gerenciamento de motos, pátios e suas movimentações, desenvolvida em ASP.NET Core com Entity Framework Core e banco Oracle. Permite operações CRUD completas, consultas parametrizadas de moto por ID e placa, e oferece documentação automática via Swagger.
 
 ---
 
-## 📦 Rotas da API (Motos)
+## Rotas da API
 
-| Método | Endpoint               | Descrição                         | Códigos HTTP Esperados              |
-|--------|------------------------|---------------------------------|-----------------------------------|
-| GET    | /api/motos             | Retorna todas as motos           | 200 OK                            |
-| GET    | /api/motos/{id}        | Retorna moto por ID              | 200 OK, 404 Not Found             |
-| GET    | /api/motos/search      | Retorna moto pela placa (query) | 200 OK, 404 Not Found             |
-| POST   | /api/motos             | Cria uma nova moto               | 201 Created, 400 Bad Request      |
+### (Motos)
+
+| Método | Endpoint               | Descrição                        | Códigos HTTP Esperados                         |
+|--------|------------------------|----------------------------------|------------------------------------------------|
+| GET    | /api/motos             | Retorna todas as motos           | 200 OK                                         |
+| GET    | /api/motos/{id}        | Retorna moto por ID              | 200 OK, 404 Not Found                          |
+| GET    | /api/motos/search      | Retorna moto pela placa (query)  | 200 OK, 404 Not Found                          |
+| POST   | /api/motos             | Cria uma nova moto               | 201 Created, 400 Bad Request                   |
 | PUT    | /api/motos/{id}        | Atualiza uma moto existente      | 204 No Content, 400 Bad Request, 404 Not Found |
-| DELETE | /api/motos/{id}        | Exclui uma moto por ID           | 204 No Content, 404 Not Found     |
+| DELETE | /api/motos/{id}        | Exclui uma moto por ID           | 204 No Content, 404 Not Found                  |
+
+### (Patios)
+
+| Método | Endpoint               | Descrição                        | Códigos HTTP Esperados                         |
+|--------|------------------------|----------------------------------|------------------------------------------------|
+| GET    | /api/patios            | Retorna todos os pátios          | 200 OK                                         |
+| GET    | /api/patios/{id}       | Retorna pátio por ID             | 200 OK, 404 Not Found                          |
+| POST   | /api/patios            | Cria um novo pátio               | 201 Created, 400 Bad Request                   |
+| PUT    | /api/patios/{id}       | Atualiza um pátio existente      | 204 No Content, 400 Bad Request, 404 Not Found |
+| DELETE | /api/patios/{id}       | Exclui um pátio por ID           | 204 No Content, 404 Not Found                  |
+
+### (Movimentacoes)
+
+| Método | Endpoint               | Descrição                        | Códigos HTTP Esperados                         |
+|--------|------------------------|----------------------------------|------------------------------------------------|
+| GET    | /api/movimentacoes     | Retorna todas movimentações      | 200 OK                                         |
+| GET    | /api/movimentacoes/{id}| Retorna movimentação por ID      | 200 OK, 404 Not Found                          |
+| POST   | /api/movimentacoes     | Cria nova movimentação           | 201 Created, 400 Bad Request                   |
+| PUT    | /api/movimentacoes/{id}| Atualiza movimentação existente  | 204 No Content, 400 Bad Request, 404 Not Found |
+| DELETE | /api/movimentacoes/{id}| Exclui movimentação por ID       | 204 No Content, 404 Not Found                  |
 
 ---
 
