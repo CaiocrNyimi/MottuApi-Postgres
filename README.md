@@ -1,5 +1,8 @@
 
-# 🏍️ API de Gestão de Motos:  Henzo Puchetti - RM555179 e Luann Domingos Mariano - RM558548
+# 🏍️ API de Gestão de Motos:  
+- Henzo Puchetti - RM555179
+- Luann Domingos Mariano - RM558548
+- Caio Cesar Rosa Nyimi - RM556331
 
 ---
 
