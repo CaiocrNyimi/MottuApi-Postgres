@@ -96,8 +96,6 @@ namespace MottuApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Movimentacao movimentacao)
         {
-            if (id != movimentacao.Id) return BadRequest("IDs diferentes.");
-
             var existente = await _context.Movimentacoes.FindAsync(id);
             if (existente == null) return NotFound();
 
@@ -107,7 +105,7 @@ namespace MottuApi.Controllers
             existente.DataSaida = movimentacao.DataSaida;
 
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(existente);
         }
 
         /// <summary>
