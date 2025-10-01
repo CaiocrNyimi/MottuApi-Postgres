@@ -97,11 +97,11 @@ Abaixo estão exemplos de objetos JSON utilizados nas principais rotas da API:
   "dataSaida": null
 }
 ```
-placa: Identificador da moto
-status: Situação atual (ex: Disponível, Em manutenção, Alugada)
-patio: Nome do pátio onde está localizada
-dataEntrada: Data e hora de entrada no pátio
-dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
+- placa: Identificador da moto
+- status: Situação atual (ex: Disponível, Em manutenção, Alugada)
+- patio: Nome do pátio onde está localizada
+- dataEntrada: Data e hora de entrada no pátio
+- dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
 
 🏢 Pátios
 ```json
@@ -110,8 +110,8 @@ dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
   "localizacao": "Rua das Motos, 123 - São Paulo"
 }
 ```
-nome: Nome do pátio
-localizacao: Endereço físico do pátio
+- nome: Nome do pátio
+- localizacao: Endereço físico do pátio
 
 🔄 Movimentações
 ```json
@@ -122,8 +122,8 @@ localizacao: Endereço físico do pátio
   "dataSaida": null
 }
 ```
-motoId: ID da moto envolvida na movimentação
-patioId: ID do pátio de destino
-dataEntrada: Data e hora de entrada
-dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
+- motoId: ID da moto envolvida na movimentação
+- patioId: ID do pátio de destino
+- dataEntrada: Data e hora de entrada
+- dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
 
