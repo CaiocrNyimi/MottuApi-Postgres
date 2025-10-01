@@ -86,8 +86,6 @@ namespace MottuApi.Controllers
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, Patio patio)
         {
-            if (id != patio.Id) return BadRequest("IDs diferentes.");
-
             var existente = await _context.Patios.FindAsync(id);
             if (existente == null) return NotFound();
 
@@ -95,7 +93,7 @@ namespace MottuApi.Controllers
             existente.Localizacao = patio.Localizacao;
 
             await _context.SaveChangesAsync();
-            return NoContent();
+            return Ok(existente);
         }
 
         /// <summary>
