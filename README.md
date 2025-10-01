@@ -83,3 +83,47 @@ dotnet ef database update
   *EU RODEI NA URL* - `http://localhost:5248/swagger`
 ---
 
+### 📦 Exemplos de Requisições JSON
+
+Abaixo estão exemplos de objetos JSON utilizados nas principais rotas da API:
+
+🛵 Motos
+```json
+{
+  "placa": "ABC1234",
+  "status": "Disponível",
+  "patio": "Central",
+  "dataEntrada": "2025-10-01T08:00:00Z",
+  "dataSaida": null
+}
+```
+placa: Identificador da moto
+status: Situação atual (ex: Disponível, Em manutenção, Alugada)
+patio: Nome do pátio onde está localizada
+dataEntrada: Data e hora de entrada no pátio
+dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
+
+🏢 Pátios
+```json
+{
+  "nome": "Pátio Central",
+  "localizacao": "Rua das Motos, 123 - São Paulo"
+}
+```
+nome: Nome do pátio
+localizacao: Endereço físico do pátio
+
+🔄 Movimentações
+```json
+{
+  "motoId": 1,
+  "patioId": 1,
+  "dataEntrada": "2025-10-01T08:30:00Z",
+  "dataSaida": null
+}
+```
+motoId: ID da moto envolvida na movimentação
+patioId: ID do pátio de destino
+dataEntrada: Data e hora de entrada
+dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
+
