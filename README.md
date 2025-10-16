@@ -1,15 +1,53 @@
+# API de Gestão de Motos:  
 
-# 🏍️ API de Gestão de Motos:  
+## Integrantes:
+
 - Henzo Puchetti - RM555179
 - Luann Domingos Mariano - RM558548
 - Caio Cesar Rosa Nyimi - RM556331
 
 ---
 
-## 📌 Descrição
+## Descrição
 
-Com uma arquitetura simples e eficiente para facilitar manutenção e escalabilidade, desenvolvemos uma:
-API RESTful para gerenciamento de motos, pátios e suas movimentações, desenvolvida em ASP.NET Core com Entity Framework Core e banco Oracle. Permite operações CRUD completas, consultas parametrizadas de moto por ID e placa, e oferece documentação automática via Swagger.
+Esta API RESTful foi desenvolvida para gerenciar o fluxo de motos em pátios de estacionamento, permitindo controle preciso sobre entrada, saída e movimentações. O sistema é ideal para empresas que possuem operações envolvendo frotas de motocicletas.
+
+A solução foi construída com ASP.NET Core e Entity Framework Core, utilizando banco de dados Oracle. A arquitetura foi projetada com foco em escalabilidade, separação de responsabilidades e boas práticas RESTful, como:
+
+- CRUD completo para Moto, Pátio e Movimentação;
+- Paginação nas listagens;
+- HATEOAS nos endpoints principais;
+- Documentação via Swagger;
+- Camada de serviços para encapsular regras de negócio.
+
+---
+
+## Modelagem e Domínio
+
+O sistema é composto por três entidades principais:
+
+- **Moto**: representa uma moto cadastrada no sistema. Cada moto está associada a um pátio via chave estrangeira PatioId, garantindo integridade relacional;
+
+- **Pátio**: local físico onde motos são estacionadas. Pode conter várias motos e movimentações;
+
+- **Movimentação**: registra a entrada e saída de uma moto em um pátio, com data/hora e vínculo entre as entidades.
+
+## Relacionamentos
+
+- Uma **Moto** pertence a um único **Pátio**;
+- Um **Pátio** pode conter várias **Motos** e **Movimentações**;
+- Uma **Movimentação** está vinculada a uma **Moto** e a um **Pátio**.
+
+---
+
+## Arquitetura
+
+A API segue o padrão de camadas:
+
+- **Controllers**: responsáveis por receber requisições HTTP e transmitir para os services;
+- **Services**: encapsulam regras de negócio e acesso ao banco;
+- **Models**: representam as entidades do domínio;
+- **DbContext**: gerencia o mapeamento com o banco Oracle.
 
 ---
 
@@ -83,6 +121,15 @@ dotnet ef database update
   *EU RODEI NA URL* - `http://localhost:5248/swagger`
 ---
 
+## Testes Automatizados
+
+Para rodar os testes unitários:
+```bash
+dotnet test
+```
+
+---
+
 ### 📦 Exemplos de Requisições JSON
 
 Abaixo estão exemplos de objetos JSON utilizados nas principais rotas da API:
@@ -91,15 +138,17 @@ Abaixo estão exemplos de objetos JSON utilizados nas principais rotas da API:
 ```json
 {
   "placa": "ABC1234",
+  "modelo": "Honda CG 160",
   "status": "Disponível",
-  "patio": "Central",
+  "patioId": 1,
   "dataEntrada": "2025-10-01T08:00:00Z",
   "dataSaida": null
 }
 ```
 - placa: Identificador da moto
+- modelo: Modelo da moto
 - status: Situação atual (ex: Disponível, Em manutenção, Alugada)
-- patio: Nome do pátio onde está localizada
+- patioId: Id do pátio onde está localizada
 - dataEntrada: Data e hora de entrada no pátio
 - dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
 
@@ -126,4 +175,3 @@ Abaixo estão exemplos de objetos JSON utilizados nas principais rotas da API:
 - patioId: ID do pátio de destino
 - dataEntrada: Data e hora de entrada
 - dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
-
