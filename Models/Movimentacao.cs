@@ -1,45 +1,50 @@
 using System;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MottuApi.Models
 {
     /// <summary>
-    /// Representa o registro de entrada e saÌda de uma moto em um p·tio.
+    /// Representa o registro de entrada e sa√≠da de uma moto em um p√°tio.
     /// </summary>
     public class Movimentacao
     {
         /// <summary>
-        /// Identificador ˙nico da movimentaÁ„o.
+        /// Identificador √∫nico da movimenta√ß√£o.
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
         /// Identificador da moto relacionada.
         /// </summary>
+        [ForeignKey("Moto")]
         public int MotoId { get; set; }
 
         /// <summary>
-        /// Identificador do p·tio relacionado.
+        /// Moto relacionada √† movimenta√ß√£o.
         /// </summary>
+        public Moto Moto { get; set; } = null!;
+
+        /// <summary>
+        /// Identificador do p√°tio relacionado.
+        /// </summary>
+        [ForeignKey("Patio")]
         public int PatioId { get; set; }
 
         /// <summary>
-        /// Data e hora de entrada da moto no p·tio.
+        /// P√°tio relacionado √† movimenta√ß√£o.
         /// </summary>
-        public DateTime DataEntrada { get; set; }
+        public Patio Patio { get; set; } = null!;
 
         /// <summary>
-        /// Data e hora de saÌda da moto do p·tio (opcional).
+        /// Data e hora de entrada da moto no p√°tio.
+        /// </summary>
+        public DateTime DataEntrada { get; set; } = DateTime.Now;
+
+        /// <summary>
+        /// Data e hora de sa√≠da da moto do p√°tio (opcional).
         /// </summary>
         public DateTime? DataSaida { get; set; }
-
-        /// <summary>
-        /// Moto relacionada ‡ movimentaÁ„o.
-        /// </summary>
-        public Moto? Moto { get; set; }
-
-        /// <summary>
-        /// P·tio relacionado ‡ movimentaÁ„o.
-        /// </summary>
-        public Patio? Patio { get; set; }
     }
 }

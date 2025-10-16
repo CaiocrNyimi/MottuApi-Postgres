@@ -1,30 +1,41 @@
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace MottuApi.Models
 {
     /// <summary>
-    /// Representa um p·tio de estacionamento de motos.
+    /// Representa um p√°tio de estacionamento de motos.
     /// </summary>
     public class Patio
     {
         /// <summary>
-        /// Identificador ˙nico do p·tio.
+        /// Identificador √∫nico do p√°tio.
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
-        /// Nome do p·tio.
+        /// Nome do p√°tio.
         /// </summary>
+        [Required]
+        [MaxLength(100)]
         public string Nome { get; set; } = string.Empty;
 
         /// <summary>
-        /// LocalizaÁ„o fÌsica do p·tio.
+        /// Localiza√ß√£o f√≠sica do p√°tio.
         /// </summary>
+        [Required]
+        [MaxLength(200)]
         public string Localizacao { get; set; } = string.Empty;
 
         /// <summary>
-        /// MovimentaÁıes relacionadas a este p·tio.
+        /// Motos atualmente associadas a este p√°tio.
         /// </summary>
-        public ICollection<Movimentacao>? Movimentacoes { get; set; }
+        public ICollection<Moto> Motos { get; set; } = new List<Moto>();
+
+        /// <summary>
+        /// Movimenta√ß√µes relacionadas a este p√°tio.
+        /// </summary>
+        public ICollection<Movimentacao> Movimentacoes { get; set; } = new List<Movimentacao>();
     }
 }

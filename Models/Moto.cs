@@ -1,5 +1,7 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace MottuApi.Models
 {
@@ -11,22 +13,40 @@ namespace MottuApi.Models
         /// <summary>
         /// Identificador único da moto.
         /// </summary>
+        [Key]
         public int Id { get; set; }
 
         /// <summary>
         /// Placa da moto.
         /// </summary>
+        [Required]
+        [MaxLength(10)]
         public string Placa { get; set; } = string.Empty;
+
+        /// <summary>
+        /// Modelo da moto.
+        /// </summary>
+        [Required]
+        [MaxLength(50)]
+        public string Modelo { get; set; } = string.Empty;
 
         /// <summary>
         /// Status atual da moto (Ex: Disponível, Em Uso, Em Manutenção).
         /// </summary>
+        [Required]
+        [MaxLength(20)]
         public string Status { get; set; } = "Disponível";
 
         /// <summary>
-        /// Nome do pátio onde a moto está estacionada.
+        /// Chave estrangeira para o pátio onde a moto está estacionada.
         /// </summary>
-        public string Patio { get; set; } = string.Empty;
+        [ForeignKey("Patio")]
+        public int PatioId { get; set; }
+
+        /// <summary>
+        /// Pátio associado à moto.
+        /// </summary>
+        public Patio Patio { get; set; } = null!;
 
         /// <summary>
         /// Data de entrada da moto no pátio.
@@ -41,6 +61,6 @@ namespace MottuApi.Models
         /// <summary>
         /// Movimentações relacionadas à moto.
         /// </summary>
-        public ICollection<Movimentacao>? Movimentacoes { get; set; }
+        public ICollection<Movimentacao> Movimentacoes { get; set; } = new List<Movimentacao>();
     }
 }
