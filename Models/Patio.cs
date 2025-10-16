@@ -6,6 +6,12 @@ namespace MottuApi.Models
     /// <summary>
     /// Representa um pátio de estacionamento de motos.
     /// </summary>
+    /// <example>
+    /// {
+    ///   "nome": "Pátio Central",
+    ///   "localizacao": "Rua das Motos, 123"
+    /// }
+    /// </example>
     public class Patio
     {
         /// <summary>

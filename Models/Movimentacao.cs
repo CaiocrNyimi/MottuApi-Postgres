@@ -7,6 +7,14 @@ namespace MottuApi.Models
     /// <summary>
     /// Representa o registro de entrada e saída de uma moto em um pátio.
     /// </summary>
+    /// <example>
+    /// {
+    ///   "motoId": 1,
+    ///   "patioId": 2,
+    ///   "dataEntrada": "2025-10-16T09:00:00",
+    ///   "dataSaida": "2025-10-16T18:00:00"
+    /// }
+    /// </example>
     public class Movimentacao
     {
         /// <summary>

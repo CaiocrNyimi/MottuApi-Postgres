@@ -8,6 +8,16 @@ namespace MottuApi.Models
     /// <summary>
     /// Representa uma moto estacionada no sistema.
     /// </summary>
+    /// <example>
+    /// {
+    ///   "placa": "ABC1234",
+    ///   "modelo": "Honda CG 160",
+    ///   "status": "Disponível",
+    ///   "patioId": 1,
+    ///   "dataEntrada": "2025-10-16T09:00:00",
+    ///   "dataSaida": null
+    /// }
+    /// </example>
     public class Moto
     {
         /// <summary>
