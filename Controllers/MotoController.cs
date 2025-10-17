@@ -1,5 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
-using MottuApi.Models;
+using MottuApi.Dtos;
 using MottuApi.Services.Interfaces;
 
 namespace MottuApi.Controllers
@@ -25,10 +25,10 @@ namespace MottuApi.Controllers
         /// <param name="size">Tamanho da página (padrão: 10).</param>
         /// <returns>Lista paginada de motos.</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll(int page = 1, int size = 10)
+        public async Task<ActionResult<IEnumerable<MotoResponseDto>>> GetAll(int page = 1, int size = 10)
         {
-            var motos = await _service.GetAllAsync(page, size);
-            return Ok(motos);
+            var result = await _service.GetAllAsync(page, size);
+            return Ok(result);
         }
 
         /// <summary>
@@ -37,22 +37,22 @@ namespace MottuApi.Controllers
         /// <param name="id">Id da moto.</param>
         /// <returns>Moto encontrada ou 404.</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<MotoResponseDto>> GetById(int id)
         {
-            var moto = await _service.GetByIdAsync(id);
-            if (moto == null) return NotFound();
-            return Ok(moto);
+            var result = await _service.GetByIdAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
         }
 
         /// <summary>
         /// Cria uma nova moto.
         /// </summary>
-        /// <param name="moto">Dados da moto.</param>
+        /// <param name="dto">Dados da moto.</param>
         /// <returns>Moto criada.</returns>
         [HttpPost]
-        public async Task<IActionResult> Create(Moto moto)
+        public async Task<ActionResult<MotoResponseDto>> Create([FromBody] MotoRequestDto dto)
         {
-            var created = await _service.CreateAsync(moto);
+            var created = await _service.CreateAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
@@ -60,14 +60,13 @@ namespace MottuApi.Controllers
         /// Atualiza uma moto existente.
         /// </summary>
         /// <param name="id">Id da moto.</param>
-        /// <param name="moto">Dados atualizados.</param>
+        /// <param name="dto">Dados atualizados.</param>
         /// <returns>Status da operação.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Moto moto)
+        public async Task<IActionResult> Update(int id, [FromBody] MotoRequestDto dto)
         {
-            var success = await _service.UpdateAsync(id, moto);
-            if (!success) return NotFound();
-            return NoContent();
+            var success = await _service.UpdateAsync(id, dto);
+            return success ? NoContent() : NotFound();
         }
 
         /// <summary>
@@ -79,8 +78,7 @@ namespace MottuApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _service.DeleteAsync(id);
-            if (!success) return NotFound();
-            return NoContent();
+            return success ? NoContent() : NotFound();
         }
     }
 }

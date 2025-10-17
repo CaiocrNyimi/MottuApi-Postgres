@@ -117,8 +117,8 @@ dotnet ef database update
 - Configure `MottuApi` como projeto de inicialização.  
 - Execute (`Ctrl + F5` ou `dotnet run`).  
 - Acesse a API via navegador ou Postman em:  
-  `https://localhost:{porta}/swagger` (interface Swagger para testes).
-  *EU RODEI NA URL* - `http://localhost:5248/swagger`
+  `https://localhost:5000/swagger` (interface Swagger para testes).
+  
 ---
 
 ## Testes Automatizados

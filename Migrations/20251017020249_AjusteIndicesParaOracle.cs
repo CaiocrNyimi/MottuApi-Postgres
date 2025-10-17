@@ -6,40 +6,45 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MottuApi.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class AjusteIndicesParaOracle : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.CreateTable(
-                name: "Motos",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
-                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Placa = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Status = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Patio = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    DataEntrada = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: false),
-                    DataSaida = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Motos", x => x.Id);
-                });
-
             migrationBuilder.CreateTable(
                 name: "Patios",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
                         .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
-                    Nome = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false),
-                    Localizacao = table.Column<string>(type: "NVARCHAR2(2000)", nullable: false)
+                    Nome = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false),
+                    Localizacao = table.Column<string>(type: "NVARCHAR2(200)", maxLength: 200, nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Motos",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    Placa = table.Column<string>(type: "NVARCHAR2(7)", maxLength: 7, nullable: false),
+                    Modelo = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
+                    Status = table.Column<string>(type: "NVARCHAR2(20)", maxLength: 20, nullable: false),
+                    PatioId = table.Column<int>(type: "NUMBER(10)", nullable: true),
+                    DataEntrada = table.Column<DateTime>(type: "TIMESTAMP(7)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Motos", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Motos_Patios_PatioId",
+                        column: x => x.PatioId,
+                        principalTable: "Patios",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -71,6 +76,17 @@ namespace MottuApi.Migrations
                 });
 
             migrationBuilder.CreateIndex(
+                name: "IX_Motos_PatioId",
+                table: "Motos",
+                column: "PatioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Motos_Placa",
+                table: "Motos",
+                column: "Placa",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Movimentacoes_MotoId",
                 table: "Movimentacoes",
                 column: "MotoId");
@@ -79,6 +95,18 @@ namespace MottuApi.Migrations
                 name: "IX_Movimentacoes_PatioId",
                 table: "Movimentacoes",
                 column: "PatioId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patios_Localizacao",
+                table: "Patios",
+                column: "Localizacao",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Patios_Nome",
+                table: "Patios",
+                column: "Nome",
+                unique: true);
         }
 
         /// <inheritdoc />

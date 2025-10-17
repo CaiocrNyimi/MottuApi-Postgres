@@ -2,22 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore;
 
 namespace MottuApi.Models
 {
     /// <summary>
     /// Representa uma moto estacionada no sistema.
     /// </summary>
-    /// <example>
-    /// {
-    ///   "placa": "ABC1234",
-    ///   "modelo": "Honda CG 160",
-    ///   "status": "Disponível",
-    ///   "patioId": 1,
-    ///   "dataEntrada": "2025-10-16T09:00:00",
-    ///   "dataSaida": null
-    /// }
-    /// </example>
     public class Moto
     {
         /// <summary>
@@ -30,7 +21,7 @@ namespace MottuApi.Models
         /// Placa da moto.
         /// </summary>
         [Required]
-        [MaxLength(10)]
+        [MaxLength(7)]
         public string Placa { get; set; } = string.Empty;
 
         /// <summary>
@@ -51,22 +42,17 @@ namespace MottuApi.Models
         /// Chave estrangeira para o pátio onde a moto está estacionada.
         /// </summary>
         [ForeignKey("Patio")]
-        public int PatioId { get; set; }
+        public int? PatioId { get; set; }
 
         /// <summary>
         /// Pátio associado à moto.
         /// </summary>
-        public Patio Patio { get; set; } = null!;
+        public Patio? Patio { get; set; }
 
         /// <summary>
         /// Data de entrada da moto no pátio.
         /// </summary>
-        public DateTime DataEntrada { get; set; } = DateTime.Now;
-
-        /// <summary>
-        /// Data de saída da moto do pátio (opcional).
-        /// </summary>
-        public DateTime? DataSaida { get; set; }
+        public DateTime? DataEntrada { get; set; }
 
         /// <summary>
         /// Movimentações relacionadas à moto.

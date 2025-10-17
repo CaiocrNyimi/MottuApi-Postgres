@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MottuApi.Dtos;
 using MottuApi.Models;
 using MottuApi.Services.Interfaces;
 
@@ -23,10 +24,10 @@ namespace MottuApi.Controllers
         /// </summary>
         /// <returns>Lista de movimentações.</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<MovimentacaoResponseDto>>> GetAll()
         {
-            var movimentacoes = await _service.GetAllAsync();
-            return Ok(movimentacoes);
+            var result = await _service.GetAllAsync();
+            return Ok(result);
         }
 
         /// <summary>
@@ -35,22 +36,22 @@ namespace MottuApi.Controllers
         /// <param name="id">Id da movimentação.</param>
         /// <returns>Movimentação encontrada ou 404.</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<MovimentacaoResponseDto>> GetById(int id)
         {
-            var movimentacao = await _service.GetByIdAsync(id);
-            if (movimentacao == null) return NotFound();
-            return Ok(movimentacao);
+            var result = await _service.GetByIdAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
         }
 
         /// <summary>
         /// Cria uma nova movimentação.
         /// </summary>
-        /// <param name="movimentacao">Dados da movimentação.</param>
+        /// <param name="dto">Dados da movimentação.</param>
         /// <returns>Movimentação criada.</returns>
         [HttpPost]
-        public async Task<IActionResult> Create(Movimentacao movimentacao)
+        public async Task<ActionResult<MovimentacaoResponseDto>> Create([FromBody] MovimentacaoRequestDto dto)
         {
-            var created = await _service.CreateAsync(movimentacao);
+            var created = await _service.CreateAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
@@ -58,14 +59,13 @@ namespace MottuApi.Controllers
         /// Atualiza uma movimentação existente.
         /// </summary>
         /// <param name="id">Id da movimentação.</param>
-        /// <param name="movimentacao">Dados atualizados.</param>
+        /// <param name="dto">Dados atualizados.</param>
         /// <returns>Status da operação.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Movimentacao movimentacao)
+        public async Task<IActionResult> Update(int id, [FromBody] MovimentacaoRequestDto dto)
         {
-            var success = await _service.UpdateAsync(id, movimentacao);
-            if (!success) return NotFound();
-            return NoContent();
+            var success = await _service.UpdateAsync(id, dto);
+            return success ? NoContent() : NotFound();
         }
 
         /// <summary>
@@ -77,8 +77,7 @@ namespace MottuApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _service.DeleteAsync(id);
-            if (!success) return NotFound();
-            return NoContent();
+            return success ? NoContent() : NotFound();
         }
     }
 }

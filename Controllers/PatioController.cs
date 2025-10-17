@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using MottuApi.Dtos;
 using MottuApi.Models;
 using MottuApi.Services.Interfaces;
 
@@ -23,10 +24,10 @@ namespace MottuApi.Controllers
         /// </summary>
         /// <returns>Lista de pátios.</returns>
         [HttpGet]
-        public async Task<IActionResult> GetAll()
+        public async Task<ActionResult<IEnumerable<PatioResponseDto>>> GetAll()
         {
-            var patios = await _service.GetAllAsync();
-            return Ok(patios);
+            var result = await _service.GetAllAsync();
+            return Ok(result);
         }
 
         /// <summary>
@@ -35,22 +36,22 @@ namespace MottuApi.Controllers
         /// <param name="id">Id do pátio.</param>
         /// <returns>Pátio encontrado ou 404.</returns>
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<PatioResponseDto>> GetById(int id)
         {
-            var patio = await _service.GetByIdAsync(id);
-            if (patio == null) return NotFound();
-            return Ok(patio);
+            var result = await _service.GetByIdAsync(id);
+            if (result == null) return NotFound();
+            return Ok(result);
         }
 
         /// <summary>
         /// Cria um novo pátio.
         /// </summary>
-        /// <param name="patio">Dados do pátio.</param>
+        /// <param name="dto">Dados do pátio.</param>
         /// <returns>Pátio criado.</returns>
         [HttpPost]
-        public async Task<IActionResult> Create(Patio patio)
+        public async Task<ActionResult<PatioResponseDto>> Create([FromBody] PatioRequestDto dto)
         {
-            var created = await _service.CreateAsync(patio);
+            var created = await _service.CreateAsync(dto);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
@@ -58,14 +59,13 @@ namespace MottuApi.Controllers
         /// Atualiza um pátio existente.
         /// </summary>
         /// <param name="id">Id do pátio.</param>
-        /// <param name="patio">Dados atualizados.</param>
+        /// <param name="dto">Dados atualizados.</param>
         /// <returns>Status da operação.</returns>
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, Patio patio)
+        public async Task<IActionResult> Update(int id, [FromBody] PatioRequestDto dto)
         {
-            var success = await _service.UpdateAsync(id, patio);
-            if (!success) return NotFound();
-            return NoContent();
+            var success = await _service.UpdateAsync(id, dto);
+            return success ? NoContent() : NotFound();
         }
 
         /// <summary>
@@ -77,8 +77,7 @@ namespace MottuApi.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var success = await _service.DeleteAsync(id);
-            if (!success) return NotFound();
-            return NoContent();
+            return success ? NoContent() : NotFound();
         }
     }
 }

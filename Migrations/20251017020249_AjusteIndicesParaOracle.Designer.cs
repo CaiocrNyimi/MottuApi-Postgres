@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace MottuApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250911000748_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20251017020249_AjusteIndicesParaOracle")]
+    partial class AjusteIndicesParaOracle
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -33,25 +33,33 @@ namespace MottuApi.Migrations
 
                     OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
-                    b.Property<DateTime>("DataEntrada")
+                    b.Property<DateTime?>("DataEntrada")
                         .HasColumnType("TIMESTAMP(7)");
 
-                    b.Property<DateTime?>("DataSaida")
-                        .HasColumnType("TIMESTAMP(7)");
-
-                    b.Property<string>("Patio")
+                    b.Property<string>("Modelo")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)");
+
+                    b.Property<int?>("PatioId")
+                        .HasColumnType("NUMBER(10)");
 
                     b.Property<string>("Placa")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(7)
+                        .HasColumnType("NVARCHAR2(7)");
 
                     b.Property<string>("Status")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(20)
+                        .HasColumnType("NVARCHAR2(20)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PatioId");
+
+                    b.HasIndex("Placa")
+                        .IsUnique();
 
                     b.ToTable("Motos");
                 });
@@ -95,15 +103,32 @@ namespace MottuApi.Migrations
 
                     b.Property<string>("Localizacao")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(200)
+                        .HasColumnType("NVARCHAR2(200)");
 
                     b.Property<string>("Nome")
                         .IsRequired()
-                        .HasColumnType("NVARCHAR2(2000)");
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)");
 
                     b.HasKey("Id");
 
+                    b.HasIndex("Localizacao")
+                        .IsUnique();
+
+                    b.HasIndex("Nome")
+                        .IsUnique();
+
                     b.ToTable("Patios");
+                });
+
+            modelBuilder.Entity("MottuApi.Models.Moto", b =>
+                {
+                    b.HasOne("MottuApi.Models.Patio", "Patio")
+                        .WithMany("Motos")
+                        .HasForeignKey("PatioId");
+
+                    b.Navigation("Patio");
                 });
 
             modelBuilder.Entity("MottuApi.Models.Movimentacao", b =>
@@ -132,6 +157,8 @@ namespace MottuApi.Migrations
 
             modelBuilder.Entity("MottuApi.Models.Patio", b =>
                 {
+                    b.Navigation("Motos");
+
                     b.Navigation("Movimentacoes");
                 });
 #pragma warning restore 612, 618
