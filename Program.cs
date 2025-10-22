@@ -4,9 +4,16 @@ using MottuApi.Examples;
 using MottuApi.Services.Interfaces;
 using MottuApi.Services.Implementations;
 using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Diagnostics.HealthChecks;
+using HealthChecks.UI.Client;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowAnyOriginPolicy = "_myAllowAnyOriginPolicy";
+
+// Implementando Health Checks
+builder.Services.AddHealthChecks()
+    .AddCheck("self", () => HealthCheckResult.Healthy("A API está rodando perfeitamente!"));
 
 // Conexão com banco Oracle
 builder.Services.AddDbContext<AppDbContext>(options =>
@@ -54,6 +61,13 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+// Mapeando /health para Health Check
+app.MapHealthChecks("/health", new HealthCheckOptions()
+{
+    ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
+})
+.AllowAnonymous();
 
 app.UseHttpsRedirection();
 app.UseCors(MyAllowAnyOriginPolicy);
