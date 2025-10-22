@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace MottuApi.Migrations
 {
     /// <inheritdoc />
-    public partial class AjusteIndicesParaOracle : Migration
+    public partial class CorrigirBooleanOracle : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -23,6 +23,20 @@ namespace MottuApi.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Patios", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Usuarios",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "NUMBER(10)", nullable: false)
+                        .Annotation("Oracle:Identity", "START WITH 1 INCREMENT BY 1"),
+                    Username = table.Column<string>(type: "NVARCHAR2(50)", maxLength: 50, nullable: false),
+                    SenhaHash = table.Column<string>(type: "NVARCHAR2(100)", maxLength: 100, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Usuarios", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -107,6 +121,12 @@ namespace MottuApi.Migrations
                 table: "Patios",
                 column: "Nome",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_Username",
+                table: "Usuarios",
+                column: "Username",
+                unique: true);
         }
 
         /// <inheritdoc />
@@ -114,6 +134,9 @@ namespace MottuApi.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Movimentacoes");
+
+            migrationBuilder.DropTable(
+                name: "Usuarios");
 
             migrationBuilder.DropTable(
                 name: "Motos");

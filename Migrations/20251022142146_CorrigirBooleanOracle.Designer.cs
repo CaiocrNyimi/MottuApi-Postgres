@@ -12,8 +12,8 @@ using Oracle.EntityFrameworkCore.Metadata;
 namespace MottuApi.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251017020249_AjusteIndicesParaOracle")]
-    partial class AjusteIndicesParaOracle
+    [Migration("20251022142146_CorrigirBooleanOracle")]
+    partial class CorrigirBooleanOracle
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,6 +120,32 @@ namespace MottuApi.Migrations
                         .IsUnique();
 
                     b.ToTable("Patios");
+                });
+
+            modelBuilder.Entity("MottuApi.Models.Usuario", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("NUMBER(10)");
+
+                    OraclePropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("SenhaHash")
+                        .IsRequired()
+                        .HasMaxLength(100)
+                        .HasColumnType("NVARCHAR2(100)");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("NVARCHAR2(50)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Username")
+                        .IsUnique();
+
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("MottuApi.Models.Moto", b =>

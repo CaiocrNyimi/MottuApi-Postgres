@@ -1,19 +1,23 @@
-using Microsoft.EntityFrameworkCore;
-using MottuApi.Data;
-using MottuApi.Examples;
-using MottuApi.Services.Interfaces;
-using MottuApi.Services.Implementations;
-using Swashbuckle.AspNetCore.Filters;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
-using HealthChecks.UI.Client;
-using Microsoft.Extensions.Diagnostics.HealthChecks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Diagnostics.HealthChecks;
+using Microsoft.IdentityModel.Tokens;
+using MottuApi.Data;
+using MottuApi.Examples;
+using MottuApi.Services.Implementations;
+using MottuApi.Services.Interfaces;
+using Swashbuckle.AspNetCore.Filters;
+using System.Text;
+using HealthChecks.UI.Client;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowAnyOriginPolicy = "_myAllowAnyOriginPolicy";
 
+// Rotas com nome minúsculo
 builder.Services.AddRouting(options =>
 {
     options.LowercaseUrls = true;
@@ -43,17 +47,41 @@ builder.Services.AddVersionedApiExplorer(
 
 // Conexão com banco Oracle
 builder.Services.AddDbContext<AppDbContext>(options =>
-    options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection")));
+{
+    options.UseOracle(builder.Configuration.GetConnectionString("OracleConnection"));
+    options.LogTo(Console.WriteLine);
+});
 
 // Injeção de dependência para serviços
 builder.Services.AddScoped<IMotoService, MotoService>();
 builder.Services.AddScoped<IPatioService, PatioService>();
 builder.Services.AddScoped<IMovimentacaoService, MovimentacaoService>();
+builder.Services.AddScoped<IAuthService, AuthService>();
+
+// Autenticação JWT
+builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters = new TokenValidationParameters
+        {
+            ValidateIssuer = true,
+            ValidateAudience = true,
+            ValidateLifetime = true,
+            ValidateIssuerSigningKey = true,
+            ValidIssuer = builder.Configuration["Jwt:Issuer"],
+            ValidAudience = builder.Configuration["Jwt:Audience"],
+            IssuerSigningKey = new SymmetricSecurityKey(
+                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+            )
+        };
+    });
+
+builder.Services.AddAuthorization();
 
 // Controllers
 builder.Services.AddControllers();
 
-// Swagger/OpenAPI
+// Swagger
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
@@ -62,22 +90,40 @@ builder.Services.AddSwaggerGen(options =>
     options.IncludeXmlComments(xmlPath, includeControllerXmlComments: true);
     options.ExampleFilters();
 
-    var provider = builder.Services.BuildServiceProvider().GetRequiredService<IApiVersionDescriptionProvider>();
-
-    foreach (var description in provider.ApiVersionDescriptions)
+    // JWT no Swagger
+    options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        options.SwaggerDoc(description.GroupName, new OpenApiInfo()
+        Description = "Insira o token JWT no campo abaixo. Exemplo: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        Name = "Authorization",
+        In = ParameterLocation.Header,
+        Type = SecuritySchemeType.Http,
+        Scheme = "Bearer",
+        BearerFormat = "JWT"
+    });
+    
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
         {
-            Title = $"Mottu API - {description.ApiVersion}",
-            Version = description.ApiVersion.ToString(),
-        });
-    }
+            new OpenApiSecurityScheme
+            {
+                Reference = new OpenApiReference
+                {
+                    Type = ReferenceType.SecurityScheme,
+                    Id = "Bearer"
+                }
+            },
+            new string[] {}
+        }
+    });
 });
 
 // Registra exemplos dos modelos
 builder.Services.AddSwaggerExamplesFromAssemblyOf<MotoRequestExample>();
 builder.Services.AddSwaggerExamplesFromAssemblyOf<MovimentacaoRequestExample>();
 builder.Services.AddSwaggerExamplesFromAssemblyOf<PatioRequestExample>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<LoginRequestExample>();
+builder.Services.AddSwaggerExamplesFromAssemblyOf<RegisterRequestExample>();
+
 // CORS
 builder.Services.AddCors(options =>
 {
@@ -92,13 +138,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-// Pipeline de requisição
+// Swagger UI com versionamento
 if (app.Environment.IsDevelopment())
 {
+    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+
     app.UseSwagger();
     app.UseSwaggerUI(options =>
     {
-        var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
         foreach (var description in provider.ApiVersionDescriptions)
         {
             options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
@@ -116,6 +163,11 @@ app.MapHealthChecks("/health", new HealthCheckOptions()
 
 app.UseHttpsRedirection();
 app.UseCors(MyAllowAnyOriginPolicy);
+
+// Autenticação e autorização
+app.UseAuthentication();
+app.UseAuthorization();
+
 app.MapControllers();
 
 app.Run();

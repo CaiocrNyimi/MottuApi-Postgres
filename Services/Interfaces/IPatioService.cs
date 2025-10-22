@@ -1,5 +1,4 @@
 using MottuApi.Dtos;
-using MottuApi.Models;
 
 namespace MottuApi.Services.Interfaces
 {

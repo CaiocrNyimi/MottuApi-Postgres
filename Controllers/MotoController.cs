@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using MottuApi.Dtos;
 using MottuApi.Services.Interfaces;
@@ -7,6 +8,7 @@ namespace MottuApi.Controllers
     /// <summary>
     /// Controller para operações CRUD de motos.
     /// </summary>
+    [Authorize]
     [ApiController]
     [Route("api/v{version:apiVersion}/[controller]")]
     [ApiVersion("1.0")]

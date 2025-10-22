@@ -1,5 +1,3 @@
-using MottuApi.Dtos;
-
 namespace MottuApi.Dtos
 {
     public class MovimentacaoResponseDto

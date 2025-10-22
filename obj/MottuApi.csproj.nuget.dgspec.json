@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\MottuApi.csproj": {}
+    "C:\\Users\\caioc\\Desktop\\MottuAPI-CS\\MottuApi.csproj": {}
   },
   "projects": {
-    "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\MottuApi.csproj": {
+    "C:\\Users\\caioc\\Desktop\\MottuAPI-CS\\MottuApi.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\MottuApi.csproj",
+        "projectUniqueName": "C:\\Users\\caioc\\Desktop\\MottuAPI-CS\\MottuApi.csproj",
         "projectName": "MottuApi",
-        "projectPath": "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\MottuApi.csproj",
-        "packagesPath": "C:\\Users\\labsfiap\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\labsfiap\\Desktop\\MottuAPI-CS\\obj\\",
+        "projectPath": "C:\\Users\\caioc\\Desktop\\MottuAPI-CS\\MottuApi.csproj",
+        "packagesPath": "C:\\Users\\caioc\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\caioc\\Desktop\\MottuAPI-CS\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\labsfiap\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\caioc\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,7 +26,6 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -54,6 +53,14 @@
             "AspNetCore.HealthChecks.UI.Client": {
               "target": "Package",
               "version": "[9.0.0, )"
+            },
+            "BCrypt.Net-Next": {
+              "target": "Package",
+              "version": "[4.0.3, )"
+            },
+            "Microsoft.AspNetCore.Authentication.JwtBearer": {
+              "target": "Package",
+              "version": "[8.0.0, )"
             },
             "Microsoft.AspNetCore.Mvc.Versioning": {
               "target": "Package",
@@ -117,7 +124,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.304/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
