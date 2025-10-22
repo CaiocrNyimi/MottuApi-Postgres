@@ -8,7 +8,8 @@ namespace MottuApi.Controllers
     /// Controller para operações CRUD de motos.
     /// </summary>
     [ApiController]
-    [Route("api/motos")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     public class MotoController : ControllerBase
     {
         private readonly IMotoService _service;

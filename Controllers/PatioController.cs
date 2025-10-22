@@ -9,7 +9,8 @@ namespace MottuApi.Controllers
     /// Controller para operações CRUD de pátios.
     /// </summary>
     [ApiController]
-    [Route("api/patios")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     public class PatioController : ControllerBase
     {
         private readonly IPatioService _service;

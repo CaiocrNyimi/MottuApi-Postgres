@@ -9,7 +9,8 @@ namespace MottuApi.Controllers
     /// Controller para operações CRUD de movimentações.
     /// </summary>
     [ApiController]
-    [Route("api/movimentacoes")]
+    [Route("api/v{version:apiVersion}/[controller]")]
+    [ApiVersion("1.0")]
     public class MovimentacaoController : ControllerBase
     {
         private readonly IMovimentacaoService _service;
