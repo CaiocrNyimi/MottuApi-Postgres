@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "i9gwwBWHGeo=",
+  "dgSpecHash": "B2RWTlCVBc8=",
   "success": true,
   "projectFilePath": "C:\\Users\\caioc\\Desktop\\MottuAPI-CS\\MottuApi.csproj",
   "expectedPackageFiles": [
@@ -108,6 +108,10 @@
     "C:\\Users\\caioc\\.nuget\\packages\\microsoft.identitymodel.protocols\\7.0.3\\microsoft.identitymodel.protocols.7.0.3.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\microsoft.identitymodel.protocols.openidconnect\\7.0.3\\microsoft.identitymodel.protocols.openidconnect.7.0.3.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\microsoft.identitymodel.tokens\\7.0.3\\microsoft.identitymodel.tokens.7.0.3.nupkg.sha512",
+    "C:\\Users\\caioc\\.nuget\\packages\\microsoft.ml\\4.0.2\\microsoft.ml.4.0.2.nupkg.sha512",
+    "C:\\Users\\caioc\\.nuget\\packages\\microsoft.ml.cpumath\\4.0.2\\microsoft.ml.cpumath.4.0.2.nupkg.sha512",
+    "C:\\Users\\caioc\\.nuget\\packages\\microsoft.ml.dataview\\4.0.2\\microsoft.ml.dataview.4.0.2.nupkg.sha512",
+    "C:\\Users\\caioc\\.nuget\\packages\\microsoft.ml.fasttree\\4.0.2\\microsoft.ml.fasttree.4.0.2.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\microsoft.net.stringtools\\17.8.3\\microsoft.net.stringtools.17.8.3.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\microsoft.openapi\\1.6.23\\microsoft.openapi.1.6.23.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\microsoft.visualstudio.web.codegeneration\\8.0.6\\microsoft.visualstudio.web.codegeneration.8.0.6.nupkg.sha512",
@@ -137,8 +141,8 @@
     "C:\\Users\\caioc\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\8.1.1\\swashbuckle.aspnetcore.swagger.8.1.1.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\8.1.1\\swashbuckle.aspnetcore.swaggergen.8.1.1.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\8.1.1\\swashbuckle.aspnetcore.swaggerui.8.1.1.nupkg.sha512",
-    "C:\\Users\\caioc\\.nuget\\packages\\system.codedom\\6.0.0\\system.codedom.6.0.0.nupkg.sha512",
-    "C:\\Users\\caioc\\.nuget\\packages\\system.collections.immutable\\7.0.0\\system.collections.immutable.7.0.0.nupkg.sha512",
+    "C:\\Users\\caioc\\.nuget\\packages\\system.codedom\\8.0.0\\system.codedom.8.0.0.nupkg.sha512",
+    "C:\\Users\\caioc\\.nuget\\packages\\system.collections.immutable\\8.0.0\\system.collections.immutable.8.0.0.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.composition\\7.0.0\\system.composition.7.0.0.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.composition.attributedmodel\\7.0.0\\system.composition.attributedmodel.7.0.0.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.composition.convention\\7.0.0\\system.composition.convention.7.0.0.nupkg.sha512",
@@ -155,6 +159,8 @@
     "C:\\Users\\caioc\\.nuget\\packages\\system.identitymodel.tokens.jwt\\7.0.3\\system.identitymodel.tokens.jwt.7.0.3.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.io.pipelines\\9.0.5\\system.io.pipelines.9.0.5.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.memory\\4.6.0\\system.memory.4.6.0.nupkg.sha512",
+    "C:\\Users\\caioc\\.nuget\\packages\\system.numerics.tensors\\8.0.0\\system.numerics.tensors.8.0.0.nupkg.sha512",
+    "C:\\Users\\caioc\\.nuget\\packages\\system.reflection.emit.lightweight\\4.7.0\\system.reflection.emit.lightweight.4.7.0.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.reflection.metadata\\7.0.0\\system.reflection.metadata.7.0.0.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.reflection.metadataloadcontext\\7.0.0\\system.reflection.metadataloadcontext.7.0.0.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
@@ -163,7 +169,7 @@
     "C:\\Users\\caioc\\.nuget\\packages\\system.security.principal.windows\\5.0.0\\system.security.principal.windows.5.0.0.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.text.encodings.web\\9.0.5\\system.text.encodings.web.9.0.5.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.text.json\\9.0.5\\system.text.json.9.0.5.nupkg.sha512",
-    "C:\\Users\\caioc\\.nuget\\packages\\system.threading.channels\\7.0.0\\system.threading.channels.7.0.0.nupkg.sha512",
+    "C:\\Users\\caioc\\.nuget\\packages\\system.threading.channels\\8.0.0\\system.threading.channels.8.0.0.nupkg.sha512",
     "C:\\Users\\caioc\\.nuget\\packages\\system.threading.tasks.dataflow\\7.0.0\\system.threading.tasks.dataflow.7.0.0.nupkg.sha512"
   ],
   "logs": []

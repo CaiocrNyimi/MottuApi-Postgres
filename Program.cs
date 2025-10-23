@@ -57,6 +57,7 @@ builder.Services.AddScoped<IMotoService, MotoService>();
 builder.Services.AddScoped<IPatioService, PatioService>();
 builder.Services.AddScoped<IMovimentacaoService, MovimentacaoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddSingleton<IEntregaMlService, EntregaMlService>();
 
 // Autenticação JWT
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
@@ -161,7 +162,6 @@ app.MapHealthChecks("/health", new HealthCheckOptions()
 })
 .AllowAnonymous();
 
-app.UseHttpsRedirection();
 app.UseCors(MyAllowAnyOriginPolicy);
 
 // Autenticação e autorização
