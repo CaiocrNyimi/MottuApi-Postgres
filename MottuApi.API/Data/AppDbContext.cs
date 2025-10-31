@@ -16,6 +16,7 @@ namespace MottuApi.Data
         {
             base.OnModelCreating(modelBuilder);
 
+            // Índices únicos
             modelBuilder.Entity<Moto>()
                 .HasIndex(m => m.Placa)
                 .IsUnique();
@@ -31,27 +32,6 @@ namespace MottuApi.Data
             modelBuilder.Entity<Usuario>()
                 .HasIndex(u => u.Username)
                 .IsUnique();
-
-            modelBuilder.HasSequence<int>("SEQ_PATIO").StartsAt(1).IncrementsBy(1);
-            modelBuilder.HasSequence<int>("SEQ_MOTO").StartsAt(1).IncrementsBy(1);
-            modelBuilder.HasSequence<int>("SEQ_MOVIMENTACAO").StartsAt(1).IncrementsBy(1);
-            modelBuilder.HasSequence<int>("SEQ_USUARIO").StartsAt(1).IncrementsBy(1);
-
-            modelBuilder.Entity<Patio>()
-                .Property(p => p.Id)
-                .HasDefaultValueSql("nextval('\"SEQ_PATIO\"')");
-
-            modelBuilder.Entity<Moto>()
-                .Property(m => m.Id)
-                .HasDefaultValueSql("nextval('\"SEQ_MOTO\"')");
-
-            modelBuilder.Entity<Movimentacao>()
-                .Property(m => m.Id)
-                .HasDefaultValueSql("nextval('\"SEQ_MOVIMENTACAO\"')");
-
-            modelBuilder.Entity<Usuario>()
-                .Property(u => u.Id)
-                .HasDefaultValueSql("nextval('\"SEQ_USUARIO\"')");
         }
     }
 }

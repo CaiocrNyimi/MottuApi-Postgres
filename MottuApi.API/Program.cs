@@ -36,7 +36,7 @@ builder.Services.AddApiVersioning(options =>
     options.ReportApiVersions = true;
 });
 
-// Integrando versionamento co Swagger
+// Integrando versionamento com Swagger
 builder.Services.AddVersionedApiExplorer(
     options =>
     {
@@ -45,10 +45,11 @@ builder.Services.AddVersionedApiExplorer(
     }
 );
 
-// Conexão com banco Oracle
+// Conexão com banco SQL Server via variável de ambiente
+var connectionString = Environment.GetEnvironmentVariable("CONNECTION_STRING");
 builder.Services.AddDbContext<AppDbContext>(options =>
 {
-    options.UseNpgsql(builder.Configuration.GetConnectionString("DefaultConnection"));
+    options.UseSqlServer(connectionString ?? throw new InvalidOperationException("CONNECTION_STRING não definida"));
     options.LogTo(Console.WriteLine);
 });
 
@@ -59,7 +60,11 @@ builder.Services.AddScoped<IMovimentacaoService, MovimentacaoService>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 builder.Services.AddSingleton<IEntregaMlService, EntregaMlService>();
 
-// Autenticação JWT
+// Autenticação JWT via variáveis de ambiente
+var jwtKey = Environment.GetEnvironmentVariable("JWT_KEY");
+var jwtIssuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+var jwtAudience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
+
 builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
     .AddJwtBearer(options =>
     {
@@ -69,10 +74,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             ValidateAudience = true,
             ValidateLifetime = true,
             ValidateIssuerSigningKey = true,
-            ValidIssuer = builder.Configuration["Jwt:Issuer"],
-            ValidAudience = builder.Configuration["Jwt:Audience"],
+            ValidIssuer = jwtIssuer,
+            ValidAudience = jwtAudience,
             IssuerSigningKey = new SymmetricSecurityKey(
-                Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+                Encoding.UTF8.GetBytes(jwtKey ?? throw new InvalidOperationException("JWT_KEY não definida"))
             )
         };
     });
@@ -94,14 +99,14 @@ builder.Services.AddSwaggerGen(options =>
     // JWT no Swagger
     options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
     {
-        Description = "Insira o token JWT no campo abaixo. Exemplo: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...",
+        Description = "Insira o token JWT no campo abaixo.",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.Http,
         Scheme = "Bearer",
         BearerFormat = "JWT"
     });
-    
+
     options.AddSecurityRequirement(new OpenApiSecurityRequirement
     {
         {
@@ -164,7 +169,6 @@ app.MapHealthChecks("/health", new HealthCheckOptions()
 
 app.UseCors(MyAllowAnyOriginPolicy);
 
-// Autenticação e autorização
 app.UseAuthentication();
 app.UseAuthorization();
 
