@@ -1,5 +1,4 @@
 using Xunit;
-using Microsoft.Extensions.Configuration;
 using Microsoft.EntityFrameworkCore;
 using MottuApi.Data;
 using MottuApi.Services.Implementations;
@@ -12,22 +11,13 @@ namespace MottuApi.Tests.Services
         private AuthService CriarService()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: "AuthDb")
+                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
                 .Options;
 
             var context = new AppDbContext(options);
-            context.Database.EnsureDeleted();
             context.Database.EnsureCreated();
 
-            var config = new ConfigurationBuilder()
-                .AddInMemoryCollection(new[]
-                {
-                    new KeyValuePair<string, string?>("Jwt:Key", "chavefake123456789012345678901234567890"),
-                    new KeyValuePair<string, string?>("Jwt:Issuer", "MottuApi")
-                })
-                .Build();
-
-            return new AuthService(context, config);
+            return new AuthService(context);
         }
 
         [Fact]
@@ -48,6 +38,7 @@ namespace MottuApi.Tests.Services
         [Fact]
         public async Task LoginAsync_DeveRetornarToken_QuandoCredenciaisValidas()
         {
+
             var service = CriarService();
             await service.RegistrarAsync(new RegisterRequestDto
             {
@@ -71,6 +62,12 @@ namespace MottuApi.Tests.Services
         public async Task LoginAsync_DeveRetornarNull_QuandoCredenciaisInvalidas()
         {
             var service = CriarService();
+            await service.RegistrarAsync(new RegisterRequestDto
+            {
+                Username = "admin",
+                Senha = "12345"
+            });
+
             var loginDto = new LoginRequestDto
             {
                 Username = "admin",

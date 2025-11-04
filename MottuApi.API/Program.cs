@@ -57,7 +57,11 @@ builder.Services.AddDbContext<AppDbContext>(options =>
 builder.Services.AddScoped<IMotoService, MotoService>();
 builder.Services.AddScoped<IPatioService, PatioService>();
 builder.Services.AddScoped<IMovimentacaoService, MovimentacaoService>();
-builder.Services.AddScoped<IAuthService, AuthService>();
+builder.Services.AddScoped<IAuthService>(provider =>
+{
+    var db = provider.GetRequiredService<AppDbContext>();
+    return new AuthService(db);
+});
 builder.Services.AddSingleton<IEntregaMlService, EntregaMlService>();
 
 // Autenticação JWT via variáveis de ambiente

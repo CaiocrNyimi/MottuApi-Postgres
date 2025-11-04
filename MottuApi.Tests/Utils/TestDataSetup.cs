@@ -1,57 +1,70 @@
-using System.Net.Http;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+using MottuApi.Data;
+using MottuApi.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace MottuApi.Tests.Utils
 {
     public static class TestDataSetup
     {
-        public static async Task<int> CriarPatioERetornarIdAsync(HttpClient client)
+        public static async Task SeedAsync(AppDbContext context)
         {
-            var body = new
+            if (!context.Usuarios.Any())
             {
-                nome = $"Pátio Teste {Guid.NewGuid():N}",
-                localizacao = $"Rua Teste {Guid.NewGuid():N}"
+                context.Usuarios.Add(new Usuario
+                {
+                    Username = "admin",
+                    SenhaHash = "hash123"
+                });
+
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public static async Task<int> CriarPatioERetornarIdAsync(AppDbContext context)
+        {
+            var patio = new Patio
+            {
+                Nome = $"Patio Teste {Guid.NewGuid()}",
+                Localizacao = "Rua Teste, 123"
             };
 
-            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("/api/v1/patio", content);
-            var responseBody = await response.Content.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-
-            using var doc = JsonDocument.Parse(responseBody);
-            return doc.RootElement.GetProperty("id").GetInt32();
+            context.Patios.Add(patio);
+            await context.SaveChangesAsync();
+            return patio.Id;
         }
 
-        public static async Task RemoverPatioAsync(HttpClient client, int id)
+        public static async Task<int> CriarMotoSemPatioERetornarIdAsync(AppDbContext context)
         {
-            await client.DeleteAsync($"/api/v1/patio/{id}");
-        }
-
-        public static async Task<int> CriarMotoSemPatioERetornarIdAsync(HttpClient client)
-        {
-            var body = new
+            var moto = new Moto
             {
-                modelo = $"Honda CG 160 {Guid.NewGuid():N}",
-                placa = $"ABC{new Random().Next(1, 9)}D{new Random().Next(10, 99)}",
-                status = "Disponível",
-                patioId = (int?)null,
-                dataEntrada = (string?)null
+                Placa = $"ABC{new Random().Next(1000, 9999)}",
+                Modelo = "Honda CG",
+                Status = "Disponível"
             };
 
-            var content = new StringContent(JsonSerializer.Serialize(body), Encoding.UTF8, "application/json");
-            var response = await client.PostAsync("/api/v1/moto", content);
-            var responseBody = await response.Content.ReadAsStringAsync();
-            response.EnsureSuccessStatusCode();
-
-            using var doc = JsonDocument.Parse(responseBody);
-            return doc.RootElement.GetProperty("id").GetInt32();
+            context.Motos.Add(moto);
+            await context.SaveChangesAsync();
+            return moto.Id;
         }
 
-        public static async Task RemoverMotoAsync(HttpClient client, int id)
+        public static async Task RemoverMotoAsync(AppDbContext context, int motoId)
         {
-            await client.DeleteAsync($"/api/v1/moto/{id}");
+            var moto = await context.Motos.FindAsync(motoId);
+            if (moto != null)
+            {
+                context.Motos.Remove(moto);
+                await context.SaveChangesAsync();
+            }
+        }
+
+        public static async Task RemoverPatioAsync(AppDbContext context, int patioId)
+        {
+            var patio = await context.Patios.FindAsync(patioId);
+            if (patio != null)
+            {
+                context.Patios.Remove(patio);
+                await context.SaveChangesAsync();
+            }
         }
     }
 }

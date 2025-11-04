@@ -5,14 +5,15 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
+using MottuApi.Tests.Utils;
 
 namespace MottuApi.Tests.Integration
 {
-    public class AuthTests : IClassFixture<WebApplicationFactory<Program>>
+    public class AuthTests : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _client;
 
-        public AuthTests(WebApplicationFactory<Program> factory)
+        public AuthTests(CustomWebApplicationFactory factory)
         {
             _client = factory.CreateClient();
         }

@@ -5,18 +5,25 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using MottuApi.Tests.Utils;
+using MottuApi.Data;
 
 namespace MottuApi.Tests.Integration
 {
-    public class PatioCrudTests : IClassFixture<WebApplicationFactory<Program>>
+    public class PatioCrudTests : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _client;
+        private readonly AppDbContext _db;
 
-        public PatioCrudTests(WebApplicationFactory<Program> factory)
+        public PatioCrudTests(CustomWebApplicationFactory factory)
         {
             _client = factory.CreateClient();
+
+            var scope = factory.Services.CreateScope();
+            _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
             CriarUsuarioAdminAsync().GetAwaiter().GetResult();
             var token = AutenticarAdminAsync().GetAwaiter().GetResult();
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);

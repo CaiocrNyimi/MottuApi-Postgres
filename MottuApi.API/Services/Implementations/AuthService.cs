@@ -13,12 +13,10 @@ namespace MottuApi.Services.Implementations
     public class AuthService : IAuthService
     {
         private readonly AppDbContext _context;
-        private readonly IConfiguration _config;
 
-        public AuthService(AppDbContext context, IConfiguration config)
+        public AuthService(AppDbContext context)
         {
             _context = context;
-            _config = config;
         }
 
         public async Task<bool> RegistrarAsync(RegisterRequestDto dto)
@@ -56,12 +54,19 @@ namespace MottuApi.Services.Implementations
                 new Claim("UsuarioId", usuario.Id.ToString())
             };
 
-            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_config["Jwt:Key"]!));
+            var rawKey = Environment.GetEnvironmentVariable("JWT_KEY");
+            var issuer = Environment.GetEnvironmentVariable("JWT_ISSUER");
+            var audience = Environment.GetEnvironmentVariable("JWT_AUDIENCE");
+
+            if (string.IsNullOrWhiteSpace(rawKey))
+                throw new InvalidOperationException("JWT_KEY não definida");
+
+            var chave = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(rawKey));
             var credenciais = new SigningCredentials(chave, SecurityAlgorithms.HmacSha256);
 
             var token = new JwtSecurityToken(
-                issuer: _config["Jwt:Issuer"],
-                audience: _config["Jwt:Audience"],
+                issuer: issuer,
+                audience: audience,
                 claims: claims,
                 expires: DateTime.UtcNow.AddHours(1),
                 signingCredentials: credenciais

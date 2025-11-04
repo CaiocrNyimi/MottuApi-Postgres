@@ -6,14 +6,15 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
 using Xunit;
+using MottuApi.Tests.Utils;
 
 namespace MottuApi.Tests.Integration
 {
-    public class PrevisaoEntregaTests : IClassFixture<WebApplicationFactory<Program>>
+    public class PrevisaoEntregaTests : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _client;
 
-        public PrevisaoEntregaTests(WebApplicationFactory<Program> factory)
+        public PrevisaoEntregaTests(CustomWebApplicationFactory factory)
         {
             _client = factory.CreateClient();
             CriarUsuarioAdminAsync().GetAwaiter().GetResult();

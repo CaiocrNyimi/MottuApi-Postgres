@@ -5,18 +5,25 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using MottuApi.Tests.Utils;
+using MottuApi.Data;
 
 namespace MottuApi.Tests.Integration
 {
-    public class MovimentacaoCrudTests : IClassFixture<WebApplicationFactory<Program>>
+    public class MovimentacaoCrudTests : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _client;
+        private readonly AppDbContext _db;
 
-        public MovimentacaoCrudTests(WebApplicationFactory<Program> factory)
+        public MovimentacaoCrudTests(CustomWebApplicationFactory factory)
         {
             _client = factory.CreateClient();
+
+            var scope = factory.Services.CreateScope();
+            _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
             CriarUsuarioAdminAsync().GetAwaiter().GetResult();
             var token = AutenticarAdminAsync().GetAwaiter().GetResult();
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -56,11 +63,11 @@ namespace MottuApi.Tests.Integration
             throw new InvalidOperationException("Token inválido ou ausente na resposta.");
         }
 
-                [Fact]
+        [Fact]
         public async Task CrudMovimentacao_DeveExecutarComSucesso()
         {
-            var patioId = await TestDataSetup.CriarPatioERetornarIdAsync(_client);
-            var motoId = await TestDataSetup.CriarMotoSemPatioERetornarIdAsync(_client);
+            var patioId = await TestDataSetup.CriarPatioERetornarIdAsync(_db);
+            var motoId = await TestDataSetup.CriarMotoSemPatioERetornarIdAsync(_db);
 
             var postPayload = new
             {
@@ -95,8 +102,8 @@ namespace MottuApi.Tests.Integration
             var deleteResponse = await _client.DeleteAsync($"/api/v1/movimentacao/{movimentacaoId}");
             Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
 
-            await TestDataSetup.RemoverMotoAsync(_client, motoId);
-            await TestDataSetup.RemoverPatioAsync(_client, patioId);
+            await TestDataSetup.RemoverMotoAsync(_db, motoId);
+            await TestDataSetup.RemoverPatioAsync(_db, patioId);
         }
     }
 }

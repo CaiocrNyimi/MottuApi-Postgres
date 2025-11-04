@@ -5,18 +5,25 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 using MottuApi.Tests.Utils;
+using MottuApi.Data;
 
 namespace MottuApi.Tests.Integration
 {
-    public class MotoCrudTests : IClassFixture<WebApplicationFactory<Program>>
+    public class MotoCrudTests : IClassFixture<CustomWebApplicationFactory>
     {
         private readonly HttpClient _client;
+        private readonly AppDbContext _db;
 
-        public MotoCrudTests(WebApplicationFactory<Program> factory)
+        public MotoCrudTests(CustomWebApplicationFactory factory)
         {
             _client = factory.CreateClient();
+
+            var scope = factory.Services.CreateScope();
+            _db = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
             CriarUsuarioAdminAsync().GetAwaiter().GetResult();
             var token = AutenticarAdminAsync().GetAwaiter().GetResult();
             _client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
@@ -59,7 +66,7 @@ namespace MottuApi.Tests.Integration
         [Fact]
         public async Task CrudMoto_DeveExecutarComSucesso()
         {
-            var patioId = await TestDataSetup.CriarPatioERetornarIdAsync(_client);
+            var patioId = await TestDataSetup.CriarPatioERetornarIdAsync(_db);
 
             var postPayload = new
             {
@@ -96,7 +103,7 @@ namespace MottuApi.Tests.Integration
             var deleteResponse = await _client.DeleteAsync($"/api/v1/moto/{motoId}");
             Assert.Equal(HttpStatusCode.NoContent, deleteResponse.StatusCode);
 
-            await TestDataSetup.RemoverPatioAsync(_client, patioId);
+            await TestDataSetup.RemoverPatioAsync(_db, patioId);
         }
     }
 }

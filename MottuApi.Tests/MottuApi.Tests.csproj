@@ -18,7 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\MottuApi\MottuApi.csproj" />
+    <ProjectReference Include="..\MottuApi.API\MottuApi.API.csproj" />
   </ItemGroup>
 
 </Project>
