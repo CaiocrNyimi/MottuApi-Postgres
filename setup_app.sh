@@ -98,12 +98,11 @@ az appservice plan create \
   --sku "$sku" \
   --is-linux 1>/dev/null
 
-echo "Criando WebApp Linux (sem imagem)..."
+echo "Criando WebApp Linux..."
 az webapp create \
   --resource-group "$rg" \
   --plan "$plan" \
   --name "$app" \
-  --os-type Linux 1>/dev/null
 
 echo "Habilitando Logs do WebApp..."
 az webapp log config \
