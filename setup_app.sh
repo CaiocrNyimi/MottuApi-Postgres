@@ -98,11 +98,12 @@ az appservice plan create \
   --sku "$sku" \
   --is-linux 1>/dev/null
 
-echo "Criando WebApp Linux..."
+echo "Criando WebApp Linux com imagem temporária..."
 az webapp create \
   --resource-group "$rg" \
   --plan "$plan" \
   --name "$app" \
+  --deployment-container-image-name nginx 1>/dev/null
 
 echo "Habilitando Logs do WebApp..."
 az webapp log config \
@@ -114,9 +115,6 @@ az webapp log config \
   --detailed-error-messages true \
   --failed-request-tracing true 1>/dev/null
 
-# ================================
-# Criação do Azure Container Registry (ACR)
-# ================================
 echo "Criando Azure Container Registry..."
 az acr create \
   --resource-group "$rg" \
