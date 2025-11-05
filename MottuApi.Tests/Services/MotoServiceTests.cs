@@ -12,7 +12,7 @@ namespace MottuApi.Tests.Services
         public async Task CreateAsync_DeveCriarMoto()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase("MotoDb")
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
             using var context = new AppDbContext(options);

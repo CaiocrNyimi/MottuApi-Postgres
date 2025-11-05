@@ -39,13 +39,11 @@ namespace MottuApi.Tests.Integration
             var username = $"usuarioLogin_{Guid.NewGuid():N}";
             var senha = "senhaSegura";
 
-            // Registrar usuário
             var registro = new { username, senha };
             var regContent = new StringContent(JsonSerializer.Serialize(registro), Encoding.UTF8, "application/json");
             var regResponse = await _client.PostAsync("/api/v1/auth/registrar", regContent);
             Assert.Equal(HttpStatusCode.OK, regResponse.StatusCode);
 
-            // Login
             var login = new { username, senha };
             var loginContent = new StringContent(JsonSerializer.Serialize(login), Encoding.UTF8, "application/json");
             var loginResponse = await _client.PostAsync("/api/v1/auth/login", loginContent);

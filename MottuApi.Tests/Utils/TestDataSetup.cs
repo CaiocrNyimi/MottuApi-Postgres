@@ -13,7 +13,7 @@ namespace MottuApi.Tests.Utils
                 context.Usuarios.Add(new Usuario
                 {
                     Username = "admin",
-                    SenhaHash = "hash123"
+                    SenhaHash = BCrypt.Net.BCrypt.HashPassword("12345")
                 });
 
                 await context.SaveChangesAsync();

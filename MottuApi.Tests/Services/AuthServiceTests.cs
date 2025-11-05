@@ -11,7 +11,7 @@ namespace MottuApi.Tests.Services
         private AuthService CriarService()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(databaseName: Guid.NewGuid().ToString())
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
             var context = new AppDbContext(options);
@@ -38,7 +38,6 @@ namespace MottuApi.Tests.Services
         [Fact]
         public async Task LoginAsync_DeveRetornarToken_QuandoCredenciaisValidas()
         {
-
             var service = CriarService();
             await service.RegistrarAsync(new RegisterRequestDto
             {

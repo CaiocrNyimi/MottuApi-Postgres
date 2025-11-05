@@ -12,7 +12,7 @@ namespace MottuApi.Tests.Services
         public async Task CreateAsync_DeveCriarPatio()
         {
             var options = new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase("PatioDb")
+                .UseInMemoryDatabase(Guid.NewGuid().ToString())
                 .Options;
 
             using var context = new AppDbContext(options);
