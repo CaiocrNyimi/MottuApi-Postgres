@@ -86,6 +86,7 @@ plan="planMottuApi"
 app="webapp-mottuapicloud"
 runtime="dotnet:8"
 sku="F1"
+acr="acrmottuapi"
 
 echo "Criando Grupo de Recursos..."
 az group create --name "$rg" --location "$location" 1>/dev/null
@@ -105,5 +106,16 @@ az webapp log config \
   --level information \
   --detailed-error-messages true \
   --failed-request-tracing true 1>/dev/null
+
+# ================================
+# Criação do Azure Container Registry (ACR)
+# ================================
+echo "Criando Azure Container Registry..."
+az acr create \
+  --resource-group "$rg" \
+  --name "$acr" \
+  --sku Basic \
+  --location "$location" \
+  --admin-enabled true 1>/dev/null
 
 echo "[OK] WebApp MottuApi.API provisionado e banco configurado"
