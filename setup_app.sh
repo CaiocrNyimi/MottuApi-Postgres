@@ -78,26 +78,34 @@ sqlcmd -S "$DbHost,1433" -d "$DbName" -U "$DbUser" -P "$DbPass" -i cria_objetos.
 echo "[OK] Tabelas do MottuApi.API criadas com sucesso"
 
 # ================================
-# Provisionamento da WebApp .NET (opcional para CI/CD)
+# Provisionamento da Infra Azure
 # ================================
 rg="rg-azurewebapp"
 location="brazilsouth"
 plan="planMottuApi"
 app="webapp-mottuapicloud"
-runtime="dotnet:8"
-sku="F1"
 acr="acrmottuapi"
+sku="B1"
 
 echo "Criando Grupo de Recursos..."
 az group create --name "$rg" --location "$location" 1>/dev/null
 
-echo "Criando Plano de Serviço..."
-az appservice plan create --name "$plan" --resource-group "$rg" --location "$location" --sku "$sku" 1>/dev/null
+echo "Criando Plano de Serviço Linux..."
+az appservice plan create \
+  --name "$plan" \
+  --resource-group "$rg" \
+  --location "$location" \
+  --sku "$sku" \
+  --is-linux 1>/dev/null
 
-echo "Criando Serviço de Aplicativo..."
-az webapp create --resource-group "$rg" --plan "$plan" --runtime "$runtime" --name "$app" 1>/dev/null
+echo "Criando WebApp Linux (sem imagem)..."
+az webapp create \
+  --resource-group "$rg" \
+  --plan "$plan" \
+  --name "$app" \
+  --os-type Linux 1>/dev/null
 
-echo "Habilitando Logs do Serviço de Aplicativo..."
+echo "Habilitando Logs do WebApp..."
 az webapp log config \
   --resource-group "$rg" \
   --name "$app" \
@@ -118,4 +126,4 @@ az acr create \
   --location "$location" \
   --admin-enabled true 1>/dev/null
 
-echo "[OK] WebApp MottuApi.API provisionado e banco configurado"
+echo "[OK] Infra provisionada e banco configurado com sucesso"
