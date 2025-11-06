@@ -8,21 +8,6 @@ DbUser="${3:?DbUser ausente}"
 DbPass="${4:?DbPass ausente}"
 
 # ================================
-# Verificação e instalação do sqlcmd
-# ================================
-if ! command -v sqlcmd &> /dev/null; then
-  echo "sqlcmd não encontrado. Instalando..."
-  curl -sSL https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add -
-  curl -sSL https://packages.microsoft.com/config/ubuntu/20.04/prod.list | sudo tee /etc/apt/sources.list.d/mssql-release.list
-  sudo apt-get update
-  sudo ACCEPT_EULA=Y apt-get install -y msodbcsql17 mssql-tools unixodbc-dev
-  export PATH="$PATH:/opt/mssql-tools/bin:/usr/bin"
-  echo 'export PATH="$PATH:/opt/mssql-tools/bin:/usr/bin"' >> ~/.bashrc
-else
-  echo "sqlcmd já está instalado."
-fi
-
-# ================================
 # Criação das tabelas do MottuApi.API (SQL Server)
 # ================================
 echo "Criando Script de Banco..."
