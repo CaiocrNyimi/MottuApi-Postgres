@@ -4,7 +4,6 @@ WORKDIR /app
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY . .
-RUN ls
 RUN dotnet build "MottuApi.API/MottuApi.API.csproj" -c Release -o /app/build
 
 FROM build AS publish
