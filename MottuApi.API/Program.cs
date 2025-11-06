@@ -149,20 +149,17 @@ builder.Services.AddCors(options =>
 var app = builder.Build();
 
 // Swagger UI com versionamento
-if (app.Environment.IsDevelopment())
-{
-    var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
+var provider = app.Services.GetRequiredService<IApiVersionDescriptionProvider>();
 
-    app.UseSwagger();
-    app.UseSwaggerUI(options =>
+app.UseSwagger();
+app.UseSwaggerUI(options =>
+{
+    foreach (var description in provider.ApiVersionDescriptions)
     {
-        foreach (var description in provider.ApiVersionDescriptions)
-        {
-            options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
-                description.GroupName.ToUpperInvariant());
-        }
-    });
-}
+        options.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+            description.GroupName.ToUpperInvariant());
+    }
+});
 
 // Mapeando /health para Health Check
 app.MapHealthChecks("/health", new HealthCheckOptions()
