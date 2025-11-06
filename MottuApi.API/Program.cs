@@ -17,6 +17,11 @@ using Microsoft.OpenApi.Models;
 var builder = WebApplication.CreateBuilder(args);
 var MyAllowAnyOriginPolicy = "_myAllowAnyOriginPolicy";
 
+builder.WebHost.ConfigureKestrel(options =>
+{
+    options.ListenAnyIP(80);
+});
+
 // Rotas com nome minúsculo
 builder.Services.AddRouting(options =>
 {
