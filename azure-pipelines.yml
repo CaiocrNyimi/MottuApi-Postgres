@@ -7,7 +7,7 @@ pool:
 steps:
 - task: Docker@2
   inputs:
-    containerRegistry: 'acrmottuapi-connection'
+    containerRegistry: 'acrmottuapi'
     repository: 'dotnetsql'
     command: 'buildAndPush'
     Dockerfile: 'Dockerfile'
