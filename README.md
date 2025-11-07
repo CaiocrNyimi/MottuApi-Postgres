@@ -12,7 +12,7 @@
 
 Esta API RESTful foi desenvolvida para gerenciar o fluxo de motos em pátios de estacionamento, permitindo controle preciso sobre entrada, saída e movimentações. O sistema é ideal para empresas que possuem operações envolvendo frotas de motocicletas.
 
-A solução foi construída com ASP.NET Core e Entity Framework Core, utilizando banco de dados Oracle. A arquitetura foi projetada com foco em escalabilidade, separação de responsabilidades e boas práticas RESTful, como:
+A solução foi construída com ASP.NET Core e Entity Framework Core, utilizando banco de dados SQLServer. A arquitetura foi projetada com foco em escalabilidade, separação de responsabilidades e boas práticas RESTful, como:
 
 - CRUD completo para Moto, Pátio e Movimentação;
 - Paginação nas listagens;
