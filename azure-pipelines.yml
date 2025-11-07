@@ -4,7 +4,24 @@ trigger:
 pool:
   vmImage: ubuntu-latest
 
+variables:
+  buildConfiguration: 'Release'
+
 steps:
+- task: UseDotNet@2
+  inputs:
+    packageType: 'sdk'
+    version: '8.0.x'
+
+- script: dotnet restore
+  displayName: 'Restore'
+
+- script: dotnet build --configuration $(buildConfiguration)
+  displayName: 'Build'
+
+- script: dotnet test MottuApiCloud.Tests/MottuApiCloud.Tests.csproj --configuration $(buildConfiguration) --logger trx
+  displayName: 'Tests'
+
 - task: Docker@2
   inputs:
     containerRegistry: 'acrmottuapi'
