@@ -19,7 +19,7 @@ steps:
 - script: dotnet build --configuration $(buildConfiguration)
   displayName: 'Build'
 
-- script: dotnet test MottuApiCloud.Tests/MottuApiCloud.Tests.csproj --configuration $(buildConfiguration) --logger trx
+- script: dotnet test ./MottuApiCloud.Tests/MottuApiCloud.Tests.csproj --configuration $(buildConfiguration) --logger trx
   displayName: 'Tests'
 
 - task: Docker@2
