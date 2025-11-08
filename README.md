@@ -12,15 +12,39 @@
 
 Esta API RESTful foi desenvolvida para gerenciar o fluxo de motos em pátios de estacionamento, permitindo controle preciso sobre entrada, saída e movimentações. O sistema é ideal para empresas que possuem operações envolvendo frotas de motocicletas.
 
-A solução foi construída com ASP.NET Core e Entity Framework Core, utilizando banco de dados SQLServer. A arquitetura foi projetada com foco em escalabilidade, separação de responsabilidades e boas práticas RESTful, como:
+A solução foi construída com ASP.NET Core e Entity Framework Core, utilizando banco de dados SQL Server. A arquitetura foi projetada com foco em escalabilidade, separação de responsabilidades e boas práticas RESTful. As funcionalidades são mostradas logo abaixo.
 
-- CRUD completo para Moto, Pátio e Movimentação;
-- Paginação nas listagens;
-- HATEOAS nos endpoints principais;
-- Documentação via Swagger;
-- Camada de serviços para encapsular regras de negócio.
+## Funcionalidades
+
+- CRUD completo para Moto, Pátio e Movimentação
+- Paginação nas listagens
+- HATEOAS nos endpoints principais
+- Documentação interativa via Swagger
+- Health Check endpoint (`/health`)
+- Versionamento de API (`v1`, `v2`)
+- Segurança com JWT Bearer Token
+- Endpoint de previsão com ML.NET (ex: previsão de tempo de permanência)
+- Testes unitários e de integração
 
 ---
+
+## Tecnologias Utilizadas
+
+- ASP.NET Core 8 (Web API)
+- Entity Framework Core + SQL Server
+- Swagger + HATEOAS
+- JWT Authentication
+- API Versioning
+- ML.NET (FastTree)
+- xUnit + WebApplicationFactory
+
+## Segurança
+
+A API utiliza **JWT Bearer Authentication**. Para acessar rotas protegidas:
+
+1. Autentique-se via endpoint de login.
+2. Receba o token JWT.
+3. Envie o token no header `Authorization: Bearer {seu_token}`.
 
 ## Modelagem e Domínio
 
@@ -86,20 +110,20 @@ A API segue o padrão de camadas:
 
 ---
 
-## 🚀 Instalação e Execução
+## Instalação e Execução
 
-### ✅ Pré-requisitos
+### Pré-requisitos
 
 - .NET 7 SDK  
-- SQL Server Database (Utilizado Paas da Azure)  
+- SQL Server Database (utilizei Paas da Azure)  
 - Visual Studio 2022 / VS Code
 
-### 🔧 Configuração do Banco de Dados
+### Configuração do Banco de Dados
 
 - No terminal declare CONNECTION_STRING no modelo SQL Server;
 - Execute o arquivo .sh para criar as tabelas no banco.
 
-### ▶️ Executando a Aplicação
+### Executando a Aplicação
 
 #### Aplicação Web App:
 
@@ -115,21 +139,11 @@ A API segue o padrão de camadas:
   
 ---
 
-
-## Testes Automatizados
-
-Para rodar os testes unitários:
-```bash
-dotnet test
-```
-
----
-
-### 📦 Exemplos de Requisições JSON
+### Exemplos de Requisições JSON
 
 Abaixo estão exemplos de objetos JSON utilizados nas principais rotas da API:
 
-🛵 Motos
+Motos
 ```json
 {
   "placa": "ABC1234",
@@ -147,7 +161,7 @@ Abaixo estão exemplos de objetos JSON utilizados nas principais rotas da API:
 - dataEntrada: Data e hora de entrada no pátio
 - dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
 
-🏢 Pátios
+Pátios
 ```json
 {
   "nome": "Pátio Central",
@@ -157,7 +171,7 @@ Abaixo estão exemplos de objetos JSON utilizados nas principais rotas da API:
 - nome: Nome do pátio
 - localizacao: Endereço físico do pátio
 
-🔄 Movimentações
+Movimentações
 ```json
 {
   "motoId": 1,
@@ -170,3 +184,60 @@ Abaixo estão exemplos de objetos JSON utilizados nas principais rotas da API:
 - patioId: ID do pátio de destino
 - dataEntrada: Data e hora de entrada
 - dataSaida: Data e hora de saída (pode ser null se ainda estiver no pátio)
+
+---
+
+## Testes Automatizados
+
+A solução inclui testes com **xUnit** para lógica de negócio e **WebApplicationFactory** para testes de integração.
+
+### Executar os testes
+
+Para rodar os testes unitários:
+```bash
+dotnet test
+```
+
+Os testes estão localizados na pasta MottuApi.Tests.
+
+---
+
+## Health Check
+
+Verifique a saúde da aplicação via:
+
+```bash
+GET /health
+```
+
+Retorna status 200 OK se todos os serviços estiverem operacionais.
+
+---
+
+## Versionamento
+
+A API suporta múltiplas versões via URL segmentada:
+
+- GET /api/v1/motos
+- GET /api/v2/motos
+
+---
+
+## ML.NET
+
+A API inclui um endpoint que utiliza ML.NET para previsão de tempo de permanência de uma moto no pátio com base em dados históricos.
+
+Exemplo de rota:
+
+```bash
+POST /api/ml/predict
+```
+
+Payload esperado:
+```json
+{
+  "modelo": "Honda CG 160",
+  "status": "Disponível",
+  "tempoEstadia": 5
+}
+```
