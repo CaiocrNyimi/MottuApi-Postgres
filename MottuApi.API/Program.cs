@@ -175,4 +175,9 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+app.MapGet("/nova-rota", () => Results.Text("Rota adicionada"))
+      .WithName("Rota Nova")
+      .WithTags("Health")
+      .Produces(StatusCodes.Status200OK);
+
 app.Run();
