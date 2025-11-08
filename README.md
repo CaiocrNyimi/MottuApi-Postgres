@@ -47,7 +47,7 @@ A API segue o padrão de camadas:
 - **Controllers**: responsáveis por receber requisições HTTP e transmitir para os services;
 - **Services**: encapsulam regras de negócio e acesso ao banco;
 - **Models**: representam as entidades do domínio;
-- **DbContext**: gerencia o mapeamento com o banco Oracle.
+- **DbContext**: gerencia o mapeamento com o banco SQL Server.
 
 ---
 
@@ -91,27 +91,21 @@ A API segue o padrão de camadas:
 ### ✅ Pré-requisitos
 
 - .NET 7 SDK  
-- Oracle Database (local ou remoto)  
+- SQL Server Database (Utilizado Paas da Azure)  
 - Visual Studio 2022 / VS Code
 
 ### 🔧 Configuração do Banco de Dados
 
-No arquivo `appsettings.json`, configure a string de conexão Oracle:
-
-```json
-"ConnectionStrings": {
-  "OracleConnection": "User Id=seu_usuario;Password=sua_senha;Data Source=seu_host:porta/servico"
-}
-```
-
-Execute as migrations para criar as tabelas no banco:
-
-```bash
-dotnet ef migrations add InitialCreate
-dotnet ef database update
-```
+- No terminal declare CONNECTION_STRING no modelo SQL Server;
+- Execute o arquivo .sh para criar as tabelas no banco.
 
 ### ▶️ Executando a Aplicação
+
+#### Aplicação Web App:
+
+- Basta acessar o link `https://acrmottuapi.azurewebsites.net/swagger` (interface Swagger para testes).
+
+#### Localmente:
 
 - Abra a solução no Visual Studio ou VS Code.  
 - Configure `MottuApi` como projeto de inicialização.  
@@ -120,6 +114,7 @@ dotnet ef database update
   `https://localhost:5000/swagger` (interface Swagger para testes).
   
 ---
+
 
 ## Testes Automatizados
 
